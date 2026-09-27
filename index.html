@@ -1,0 +1,297 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GitHub 주간 인기 저장소 보고서</title><style>
+:root{--bg:#0f1216;--card:#171b21;--side:#12161c;--line:#2a3038;--tx:#e6edf3;--mut:#9aa7b4;--acc:#3fb950;--acc2:#58a6ff;--star:#e3b341}
+@media(prefers-color-scheme:light){:root{--bg:#f6f8fa;--card:#fff;--side:#fff;--line:#d8dee4;--tx:#1f2328;--mut:#59636e;--acc:#1a7f37;--acc2:#0969da;--star:#9a6700}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);
+font-family:'Malgun Gothic','Apple SD Gothic Neo',system-ui,sans-serif;line-height:1.7}
+.layout{display:flex;min-height:100vh}
+aside{width:268px;flex:0 0 268px;background:var(--side);border-right:1px solid var(--line);
+padding:18px 12px 40px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.sec{font-size:.76rem;color:var(--mut);letter-spacing:.04em;padding:0 8px;margin:14px 0 6px;text-transform:uppercase}
+.sec:first-child{margin-top:0}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;
+background:none;border:0;color:var(--tx);text-align:left;padding:9px 10px;border-radius:8px;
+cursor:pointer;font-size:.88rem;font-family:inherit}
+.nav:hover{background:rgba(127,127,127,.12)}
+.nav.sel{background:rgba(63,185,80,.16);color:var(--acc);font-weight:700}
+.nav .n{font-size:.75rem;color:var(--mut)}
+.nav.sel .n{color:var(--acc)}
+.nav.vault{color:var(--star)}
+.nav.vault.sel{background:rgba(227,179,65,.16);color:var(--star)}
+main{flex:1;min-width:0;padding:24px 20px 60px;max-width:940px;margin:0 auto}
+h1{font-size:1.45rem;margin:0 0 6px}
+.meta{color:var(--mut);font-size:.9rem;margin-bottom:14px}
+.guide{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;margin-bottom:18px;font-size:.9rem}
+.guide b{color:var(--acc)}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:10px 0}
+.card.on{border-color:var(--star);box-shadow:0 0 0 2px rgba(227,179,65,.16)}
+.head{display:flex;gap:12px;align-items:flex-start}
+.rank{color:var(--mut);font-weight:700;font-size:.85rem;min-width:20px;padding-top:3px}
+.hbody{flex:1;min-width:0}
+h3{margin:0 0 6px;font-size:1.06rem;word-break:break-all}
+h3 a{color:var(--acc2);text-decoration:none}
+h3 a:hover{text-decoration:underline}
+.stats{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.badge{background:rgba(127,127,127,.16);border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.79rem;color:var(--mut)}
+.badge.up{color:var(--acc);border-color:var(--acc)}
+.badge.wk{color:var(--star);border-color:var(--star)}
+.brief{margin:0;font-weight:600}
+.acts{display:flex;flex-direction:column;gap:6px;align-items:stretch;min-width:104px}
+.btn{border-radius:8px;padding:7px 10px;font-size:.83rem;cursor:pointer;font-family:inherit;
+border:1px solid var(--line);background:transparent;color:var(--mut);white-space:nowrap}
+.btn:hover{border-color:var(--acc2);color:var(--acc2)}
+.btn.keep{border-color:var(--star);color:var(--star)}
+.btn.keep.on{background:var(--star);color:#1a1a1a;font-weight:700}
+.body{margin-top:10px}
+.more{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:none}
+.card.open .more{display:block}
+.more .cap:first-child{margin-top:0}
+.deep{margin:0 0 12px;font-size:.95rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.tag{background:rgba(88,166,255,.12);border:1px solid var(--acc2);color:var(--acc2);
+border-radius:999px;padding:2px 9px;font-size:.76rem}
+.detail{margin:0 0 12px;color:var(--mut);font-size:.93rem}
+.dl{margin:0 0 12px;font-size:.88rem;color:var(--mut)}
+.dl b{color:var(--tx);font-weight:600}
+img.og{width:100%;max-width:520px;border-radius:10px;border:1px solid var(--line);display:block}
+.shot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:10px}
+.shot-grid img{width:100%;background:#fff;border-radius:10px;border:1px solid var(--line);display:block}
+.cap{font-size:.82rem;color:var(--mut);margin:12px 0 4px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:28px 20px;text-align:center;color:var(--mut)}
+.sync{background:rgba(127,127,127,.10);border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:6px}
+.sync .who{display:block;font-size:.84rem;font-weight:600;margin-bottom:6px;word-break:break-all}
+.sync .hint{font-size:.74rem;color:var(--mut);margin-top:6px;line-height:1.45}
+.btn.mini{padding:5px 9px;font-size:.78rem}
+.btn.full{width:100%}
+.menu{display:none}
+@media(max-width:820px){
+  aside{position:fixed;z-index:20;left:-280px;transition:left .2s;box-shadow:0 0 24px rgba(0,0,0,.4)}
+  aside.open{left:0}
+  .menu{display:inline-block;position:fixed;z-index:30;top:10px;left:10px}
+  main{padding-top:56px}
+  .head{flex-wrap:wrap}
+  .acts{flex-direction:row;width:100%}
+}
+</style><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script><script src="firebase-config.js"></script></head><body><button id="menu" class="btn menu">목록</button><div class="layout"><aside id="side"></aside><main><h1 id="title">불러오는 중…</h1><div class="meta" id="meta"></div><div class="guide" id="guide"></div><div class="tools" id="tools"></div><div id="cards"></div></main></div><script>
+const SYNC = (function(){
+  const cfg = window.FIREBASE_CONFIG || {};
+  const enabled = !!(cfg.apiKey && cfg.projectId);
+  let db=null, auth=null, user=null, unsub=null, onChange=null;
+
+  function init(cb){
+    onChange = cb;
+    if(!enabled || typeof firebase === 'undefined'){ return {enabled:false}; }
+    try{
+      firebase.initializeApp(cfg);
+      auth = firebase.auth(); db = firebase.firestore();
+      auth.onAuthStateChanged(u=>{ user=u; watch(); onChange && onChange(); });
+      return {enabled:true};
+    }catch(e){ console.warn('동기화 초기화 실패', e); return {enabled:false}; }
+  }
+
+  function doc(){ return db.collection('vaults').doc(user.uid); }
+
+  function watch(){
+    if(unsub){ unsub(); unsub=null; }
+    if(!user) return;
+    // 다른 기기에서 바뀌면 즉시 반영된다
+    unsub = doc().onSnapshot(s=>{
+      const d = s.data();
+      if(d && d.items){ onChange && onChange(d.items); }
+    }, e=>console.warn('동기화 수신 오류', e));
+  }
+
+  async function push(items){
+    if(!user) return;
+    try{ await doc().set({items, updatedAt: Date.now()}); }
+    catch(e){ console.warn('동기화 저장 오류', e); }
+  }
+
+  async function login(){
+    const p = new firebase.auth.GoogleAuthProvider();
+    try{ await auth.signInWithPopup(p); }
+    catch(e){ alert('로그인에 실패했습니다: ' + (e && e.message ? e.message : e)); }
+  }
+  async function logout(){ if(auth) await auth.signOut(); }
+
+  return {
+    get enabled(){ return enabled; },
+    get user(){ return user; },
+    init, push, login, logout
+  };
+})();
+</script><script>
+const $=s=>document.querySelector(s);
+const VKEY='trend-vault-v1';
+let DATA={weeks:[]}, view={type:'week',i:0};
+
+const load=()=>{try{return JSON.parse(localStorage.getItem(VKEY)||'{}');}catch(e){return {};}};
+let VAULT=load();
+function save(v){
+  localStorage.setItem(VKEY,JSON.stringify(v));
+  if(SYNC.enabled && SYNC.user) SYNC.push(v);   // 로그인했으면 다른 기기에도 반영
+}
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+const num=v=>(typeof v==='number')?v.toLocaleString():'—';
+const gain=v=>(typeof v==='number')?'+'+v.toLocaleString():'—';
+
+function sidebar(){
+  const n=Object.keys(VAULT).length;
+  const weeks=DATA.weeks.map((w,i)=>
+    `<button class="nav${view.type==='week'&&view.i===i?' sel':''}" data-type="week" data-i="${i}">
+       <span>${esc(w.ref)}</span><span class="n">${w.rows.length}개</span></button>`).join('');
+  $('#side').innerHTML=
+    syncBox() +
+    `<div class="sec">내 보관함</div>
+     <button class="nav vault${view.type==='vault'?' sel':''}" data-type="vault">
+       <span>&#9733; 보관한 저장소</span><span class="n">${n}개</span></button>
+     <div class="sec">주차별 보고서</div>${weeks}`;
+  const si=$('#signin'), so=$('#signout');
+  if(si) si.onclick=()=>SYNC.login();
+  if(so) so.onclick=()=>SYNC.logout();
+  document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{
+    view = b.dataset.type==='vault' ? {type:'vault'} : {type:'week',i:+b.dataset.i};
+    location.hash = view.type==='vault' ? 'vault' : DATA.weeks[view.i].ref;
+    render(); document.querySelector('aside').classList.remove('open'); scrollTo(0,0);
+  });
+}
+
+function syncBox(){
+  if(!SYNC.enabled) return '';
+  const u=SYNC.user;
+  return `<div class="sync">${u
+    ? `<span class="who">${esc(u.displayName||u.email||'로그인됨')}</span>
+       <button class="btn mini" id="signout">연결 끊기</button>
+       <div class="hint">여러 기기에서 같은 보관함을 씁니다</div>`
+    : `<button class="btn mini full" id="signin">기기 간 동기화 켜기</button>
+       <div class="hint">로그인하면 다른 기기에서도 같은 보관함이 보입니다</div>`}</div>`;
+}
+
+function card(r,i,ctx){
+  const kept=!!VAULT[r.repo];
+  const shots=(r.media||[]).map(m=>
+    `<a href="${esc(m)}" target="_blank" rel="noopener"><img loading="lazy" alt="${esc(r.repo)} 사용 화면" src="${esc(m)}"></a>`).join('');
+  const wkBadge = ctx==='vault' && r.week ? `<span class="badge wk">${esc(r.week)} 보고서</span>` : '';
+  const tags=(r.topics||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('');
+  const extra = (r.deep?`<p class="deep">${esc(r.deep)}</p>`:'')
+    + (tags?`<div class="cap">이 저장소가 다루는 주제</div><div class="tags">${tags}</div>`:'')
+    + (r.home?`<p class="dl"><b>소개 홈페이지</b> <a href="${esc(r.home)}" target="_blank" rel="noopener">${esc(r.home)}</a></p>`:'')
+    + (r.pushed?`<p class="dl"><b>마지막으로 손본 날</b> ${esc(r.pushed)}</p>`:'');
+  return `<article class="card${kept?' on':''}" data-repo="${esc(r.repo)}">
+    <div class="head">
+      <span class="rank">${ctx==='vault'?'&#9733;':(i+1)}</span>
+      <div class="hbody">
+        <h3><a href="https://github.com/${esc(r.repo)}" target="_blank" rel="noopener">${esc(r.repo)}</a></h3>
+        <div class="stats">
+          ${wkBadge}
+          <span class="badge up">이번 주 별점 ${gain(r.weekly)}</span>
+          <span class="badge">누적 별점 ${num(r.cum)}</span>
+          <span class="badge">${esc(r.lang||'언어 정보 없음')}</span>
+          <span class="badge">${esc(r.lic||'—')}</span>
+        </div>
+        <p class="brief">${esc(r.brief||'설명 준비 중')}</p>
+      </div>
+      <div class="acts">
+        ${extra?'<button class="btn tog">자세히 보기 &#9660;</button>':''}
+        <button class="btn keep${kept?' on':''}">${kept?'보관 취소':'보관함에 담기'}</button>
+      </div>
+    </div>
+    <div class="body">
+      <p class="detail">${esc(r.detail||'자세한 설명이 아직 없습니다.')}</p>
+      <p class="dl"><b>주소</b> <a href="https://github.com/${esc(r.repo)}" target="_blank" rel="noopener">github.com/${esc(r.repo)}</a></p>
+      <div class="cap">저장소 소개 카드</div>
+      <img class="og" loading="lazy" alt="${esc(r.repo)} 소개 카드" src="https://opengraph.githubassets.com/1/${esc(r.repo)}">
+      ${shots?`<div class="cap">실제 사용 화면 ${r.media.length}장 (저장소 소개 문서에 실린 자료)</div><div class="shot-grid">${shots}</div>`:''}
+    </div>
+    ${extra?`<div class="more"><div class="cap">더 자세한 설명</div>${extra}</div>`:''}
+  </article>`;
+}
+
+function bind(rows,ctx){
+  document.querySelectorAll('.card').forEach(el=>{
+    const repo=el.dataset.repo;
+    const tog=el.querySelector('.tog');
+    if(tog) tog.onclick=()=>{
+      const open=el.classList.toggle('open');
+      tog.innerHTML=open?'접기 &#9650;':'자세히 보기 &#9660;';
+    };
+    el.querySelector('.keep').onclick=()=>{
+      if(VAULT[repo]){ delete VAULT[repo]; }
+      else{
+        const r=rows.find(x=>x.repo===repo);
+        VAULT[repo]={...r, week:r.week||(view.type==='week'?DATA.weeks[view.i].ref:''),
+                     savedAt:new Date().toISOString().slice(0,10)};
+      }
+      save(VAULT);
+      if(ctx==='vault'){ render(); } else { el.classList.toggle('on');
+        const b=el.querySelector('.keep'); const on=!!VAULT[repo];
+        b.classList.toggle('on',on); b.textContent=on?'보관 취소':'보관함에 담기'; sidebar(); }
+    };
+  });
+}
+
+function exportMd(){
+  const list=Object.values(VAULT);
+  if(!list.length) return;
+  const md=['# 관심 저장소 보관함','',`- 보관 중: ${list.length}개`,''].concat(
+    list.map(o=>[`## ${o.repo}`,'',
+      `- 주소: https://github.com/${o.repo}`,
+      `- 선정 주차: ${o.week||'-'} / 보관한 날: ${o.savedAt||'-'}`,
+      `- 그때 증가 별점: ${typeof o.weekly==='number'?('+'+o.weekly):'-'} / 누적 별점: ${o.cum||'-'}`,
+      '',`한 줄 요약: ${o.brief||''}`,'',`자세한 설명: ${o.detail||''}`,'',
+      o.deep?`더 자세한 설명: ${o.deep}`:'',''].join('\n'))).join('\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([md],{type:'text/markdown;charset=utf-8'}));
+  a.download='saved-repos.md'; a.click();
+}
+
+function renderVault(){
+  const list=Object.values(VAULT).sort((a,b)=>(b.savedAt||'').localeCompare(a.savedAt||''));
+  $('#title').textContent='보관한 저장소';
+  $('#meta').textContent=`${list.length}개 보관 중 · 이 목록은 사용하는 브라우저에 저장됩니다`;
+  $('#guide').innerHTML='주차별 보고서에서 <b>보관함에 담기</b>를 누른 저장소가 여기에 모입니다.<br>'
+    +'내려받기를 누르면 목록을 파일로 저장할 수 있습니다.';
+  $('#tools').innerHTML = list.length
+    ? '<button class="btn" id="exp">목록 내려받기</button><button class="btn" id="clr">전체 비우기</button>' : '';
+  $('#cards').innerHTML = list.length
+    ? list.map((r,i)=>card(r,i,'vault')).join('')
+    : '<div class="empty">아직 보관한 저장소가 없습니다.<br>왼쪽에서 주차를 골라 마음에 드는 저장소를 담아보세요.</div>';
+  bind(list,'vault');
+  if(list.length){
+    $('#exp').onclick=exportMd;
+    $('#clr').onclick=()=>{ if(confirm('보관함을 모두 비울까요?')){ VAULT={}; save(VAULT); render(); } };
+  }
+}
+
+function renderWeek(){
+  const w=DATA.weeks[view.i]; if(!w) return;
+  $('#title').textContent=`GitHub 주간 인기 급상승 저장소 (${w.ref})`;
+  $('#meta').textContent=`저장소 ${w.rows.length}개 · 최근 7일간 별점이 가장 많이 늘어난 순서 · 자료 갱신 ${DATA.generated}`;
+  $('#guide').innerHTML='<b>자세히 보기</b>를 누르면 설명과 사진이 펼쳐집니다. '
+    +'마음에 드는 저장소는 <b>보관함에 담기</b>를 누르면 왼쪽 보관함에 모입니다.';
+  $('#tools').innerHTML='';
+  $('#cards').innerHTML=w.rows.map((r,i)=>card(r,i,'week')).join('');
+  bind(w.rows,'week');
+}
+
+function render(){ view.type==='vault'?renderVault():renderWeek(); sidebar(); }
+
+SYNC.init(function(remote){
+  if(remote && typeof remote==='object'){
+    VAULT = remote;                                  // 다른 기기의 변경을 즉시 반영
+    localStorage.setItem(VKEY, JSON.stringify(VAULT));
+  }
+  if(DATA.weeks.length) render();
+});
+
+fetch('data.json').then(r=>r.json()).then(d=>{
+  DATA=d;
+  const h=decodeURIComponent(location.hash.replace('#',''));
+  if(h==='vault') view={type:'vault'};
+  else{ const i=DATA.weeks.findIndex(w=>w.ref===h); if(i>=0) view={type:'week',i}; }
+  render();
+  $('#menu').onclick=()=>document.querySelector('aside').classList.toggle('open');
+}).catch(()=>{ $('#cards').innerHTML='<div class="empty">보고서 자료를 불러오지 못했습니다.</div>'; });
+</script></body></html>
